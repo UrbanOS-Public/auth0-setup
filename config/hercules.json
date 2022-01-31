@@ -1,0 +1,24 @@
+{
+    "domain": "project-hercules.us.auth0.com",
+    "clientId": "33XpZbsjd2QxCYSV3Ww1mNgGl0vDIJ3G",
+    "clients": {
+        "Discovery": {
+            "callbacks": "[\"http://localhost:9001/oauth\", \"http://10.0.2.2:9001/oauth\", \"http://10.1.10.26:9001/oauth\", \"https://discovery.dev.internal.smartcolumbusos.com/oauth\", \"https://discovery.dev-smartos.com/oauth\", \"https://data.dev.internal.smartcolumbusos.com/tableau/connector.html\", \"https://data.dev-smartos.com/tableau/connector.html\"]",
+            "allowedLogoutUrls": "[\"http://localhost:9001/oauth\", \"https://discovery.dev.internal.smartcolumbusos.com/oauth\", \"https://discovery.dev-smartos.com/oauth\"]",
+            "allowedOrigins": "[\"http://localhost:9001\", \"https://discovery.dev.internal.smartcolumbusos.com\", \"https://discovery.dev-smartos.com\", \"https://data.dev.internal.smartcolumbusos.com\", \"https://data.dev-smartos.com\"]",
+            "webOrigins": "[\"http://localhost:9001\", \"https://discovery.dev.internal.smartcolumbusos.com\", \"https://discovery.dev-smartos.com\", \"https://data.dev.internal.smartcolumbusos.com\", \"https://data.dev-smartos.com\"]",
+            "name": "UrbanOS",
+            "type": "spa"
+        },
+        "ANDI": {
+            "callbacks": "[\"https://127.0.0.1.xip.io:4443/auth/auth0/callback\", \"https://andi.dev.internal.smartcolumbusos.com/auth/auth0/callback\", \"https://andi.dev-smartos.com/auth/auth0/callback\", \"https://sharedata.dev.internal.smartcolumbusos.com/auth/auth0/callback\", \"https://sharedata.dev-smartos.com/auth/auth0/callback\"]",
+            "allowedLogoutUrls": "[\"https://127.0.0.1.xip.io:4443/auth/auth0\", \"https://andi.dev.internal.smartcolumbusos.com/auth/auth0\", \"https://andi.dev-smartos.com/auth/auth0\", \"https://sharedata.dev.internal.smartcolumbusos.com/auth/auth0\", \"https://sharedata.dev-smartos.com/auth/auth0\"]",
+            "allowedOrigins": "[\"https://127.0.0.1.xip.io:4443\", \"https://andi.dev.internal.smartcolumbusos.com\", \"https://andi.dev-smartos.com\", \"https://sharedata.dev.internal.smartcolumbusos.com\", \"https://sharedata.dev-smartos.com\"]",
+            "webOrigins": "[\"https://127.0.0.1.xip.io:4443\", \"https://andi.dev.internal.smartcolumbusos.com\", \"https://andi.dev-smartos.com\", \"https://sharedata.dev.internal.smartcolumbusos.com\", \"https://sharedata.dev-smartos.com\"]",
+            "name": "ANDI",
+            "type": "regular_web"
+        }
+    },
+    "errorUrl": "https://discovery.dev-smartos.com/oauth/error",
+    "enabledClients": ["UrbanOS", "ANDI Dev", "Auth0 Management"]
+}

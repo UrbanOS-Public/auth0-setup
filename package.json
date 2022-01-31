@@ -1,0 +1,21 @@
+{
+  "name": "auth0_setup",
+  "version": "1.0.0",
+  "description": "Setup custom auth0",
+  "main": "auth0_setup.js",
+  "dependencies": {
+    "auth0": "^2.36.1",
+    "lodash": "^4.17.15",
+    "prompt-sync": "^4.1.7"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "prettier": "^2.5.1"
+  },
+  "scripts": {
+    "run": "node auth0_setup.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}

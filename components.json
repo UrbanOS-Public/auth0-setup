@@ -1,0 +1,186 @@
+{
+  "universalLogin": {
+    "universal_login_experience": "new"
+  },
+  "tenantSettings": {
+    "error_page": {
+      "html": "",
+      "show_log_link": false,
+      "url": "<%= errorUrl %>"
+    },
+    "picture_url": "https://avatars.githubusercontent.com/u/50330003?s=200&v=4",
+    "universal_login": {
+      "colors": {
+        "primary": "#00aeef",
+        "page_background": "#757575"
+      }
+    }
+  },
+  "apis": [
+    {
+      "name": "Discovery API",
+      "identifier": "discovery_api",
+      "allow_offline_access": true,
+      "skip_consent_for_verifiable_first_party_clients": false,
+      "token_lifetime": 86400,
+      "token_lifetime_for_web": 7200,
+      "signing_alg": "RS256",
+      "enforce_policies": false,
+      "token_dialect": "access_token"
+    },
+    {
+      "name": "Andi",
+      "identifier": "andi",
+      "allow_offline_access": true,
+      "skip_consent_for_verifiable_first_party_clients": false,
+      "token_lifetime": 86400,
+      "token_lifetime_for_web": 7200,
+      "signing_alg": "RS256",
+      "enforce_policies": false,
+      "token_dialect": "access_token"
+    }
+  ],
+  "clients": [
+    {
+      "name": "Auth0 Management",
+      "app_type": "non_interactive"
+    },
+    {
+      "name": "<%= clients['ANDI'].name %>",
+      "app_type": "<%= clients['ANDI'].type %>",
+      "callbacks": <%= clients['ANDI'
+      ].callbacks %>,
+      "allowed_logout_urls": <%= clients['ANDI'
+      ].allowedLogoutUrls %>,
+      "logo_uri": "https://avatars.githubusercontent.com/u/50330003?s=200&v=4",
+      "allowed_origins": <%= clients['ANDI'
+      ].allowedOrigins %>,
+      "jwt_configuration": {
+        "alg": "RS256",
+        "lifetime_in_seconds": 36000
+      },
+      "web_origins": <%= clients['ANDI'
+      ].webOrigins %>,
+      "custom_login_page_on": false
+    },
+    {
+      "name": "<%= clients['Discovery'].name %>",
+      "app_type": "<%= clients['Discovery'].type %>",
+      "callbacks": <%= clients['Discovery'
+      ].callbacks %>,
+      "allowed_logout_urls": <%= clients['Discovery'
+      ].allowedLogoutUrls %>,
+      "logo_uri": "https://avatars.githubusercontent.com/u/50330003?s=200&v=4",
+      "allowed_origins": <%= clients['Discovery'
+      ].allowedOrigins %>,
+      "jwt_configuration": {
+        "alg": "RS256",
+        "lifetime_in_seconds": 36000
+      },
+      "web_origins": <%= clients['Discovery'
+      ].webOrigins %>,
+      "custom_login_page_on": false,
+      "token_endpoint_auth_method": "none"
+    }
+  ],
+  "connections": [
+    {
+      "options": {
+        "email": true,
+        "profile": true,
+        "scope": [
+          "email",
+          "profile"
+        ]
+      },
+      "strategy": "google-oauth2",
+      "name": "google-oauth2"
+    },
+    {
+      "options": {
+        "mfa": {
+          "active": true,
+          "return_enroll_settings": true
+        },
+        "passwordPolicy": "excellent",
+        "strategy_version": 2,
+        "brute_force_protection": true,
+        "password_dictionary": {
+          "enable": true,
+          "dictionary": []
+        },
+        "password_complexity_options": {
+          "min_length": 8
+        }
+      },
+      "strategy": "auth0",
+      "name": "Username-Password-Authentication",
+      "is_domain_connection": false,
+      "realms": [
+        "Username-Password-Authentication"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "enabled": true,
+      "script": "function (user, context, callback) {\n  if (!user.email_verified) {\n    return callback(new UnauthorizedError('You must verify your email before you can save workspaces. Please check your email for the verification link.'));\n  } else {\n    return callback(null, user, context);\n }\n}",
+      "name": "Require Email Validation",
+      "order": 1
+    },
+    {
+      "enabled": true,
+      "script": "function(user, context, callback){\n\tvar roles = (context.authorization || {}).roles || [];\n  var scope = ((context.request || {}).query || {}).scope || '';\n  \n  if (! scope.includes('offline_access')) return callback(null, user, context);\n  if (! roles.includes('Extended Access')) return callback(new UnauthorizedError('User is not authorized to request offline_access.'));\n  \n  return callback(null, user, context);\n}",
+      "name": "Restrict Offline Access",
+      "order": 2
+    },
+    {
+      "enabled": true,
+      "name": "Multifactor Authentication",
+      "order": 4,
+      "script": "function multifactorAuthentication(user, context, callback) {\n var roles = (context.authorization || {}).roles;\n\n if (roles.includes(\"Curator\")) {\n context.multifactor = {\n provider: 'any',\n allowRememberBrowser: true\n};\n}\n\n return callback(null, user, context);\n}"
+    }
+  ],
+  "roles": [
+    {
+      "name": "Extended Access",
+      "description": "Allow for extended access via refresh tokens"
+    }
+  ],
+  "guardian": {
+    "factors": [
+      {
+        "name": "otp",
+        "enabled": true
+      },
+      {
+        "name": "email",
+        "enabled": true
+      }
+    ]
+  },
+  "actions": [
+    {
+      "name": "assign-api-key",
+      "supported_triggers": [
+        {
+          "id": "post-login",
+          "version": "v2"
+        }
+      ],
+      "codePath": "./scripts/actionScripts/assign-api-key.js",
+      "dependencies": [],
+      "runtime": "node16",
+      "secrets": []
+    }
+  ],
+  "postLoginFlow": [
+    {
+      "ref": {
+        "type": "action_name",
+        "value": "assign-api-key"
+      },
+      "display_name": "Assign API Key"
+    }
+  ]
+}
