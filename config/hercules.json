@@ -11,10 +11,10 @@
             "type": "spa"
         },
         "ANDI": {
-            "callbacks": "[\"https://127.0.0.1.xip.io:4443/auth/auth0/callback\", \"https://andi.dev.internal.smartcolumbusos.com/auth/auth0/callback\", \"https://andi.dev-smartos.com/auth/auth0/callback\", \"https://sharedata.dev.internal.smartcolumbusos.com/auth/auth0/callback\", \"https://sharedata.dev-smartos.com/auth/auth0/callback\"]",
-            "allowedLogoutUrls": "[\"https://127.0.0.1.xip.io:4443/auth/auth0\", \"https://andi.dev.internal.smartcolumbusos.com/auth/auth0\", \"https://andi.dev-smartos.com/auth/auth0\", \"https://sharedata.dev.internal.smartcolumbusos.com/auth/auth0\", \"https://sharedata.dev-smartos.com/auth/auth0\"]",
-            "allowedOrigins": "[\"https://127.0.0.1.xip.io:4443\", \"https://andi.dev.internal.smartcolumbusos.com\", \"https://andi.dev-smartos.com\", \"https://sharedata.dev.internal.smartcolumbusos.com\", \"https://sharedata.dev-smartos.com\"]",
-            "webOrigins": "[\"https://127.0.0.1.xip.io:4443\", \"https://andi.dev.internal.smartcolumbusos.com\", \"https://andi.dev-smartos.com\", \"https://sharedata.dev.internal.smartcolumbusos.com\", \"https://sharedata.dev-smartos.com\"]",
+            "callbacks": "[\"https://127.0.0.1.nip.io:4443/auth/auth0/callback\", \"https://andi.dev.internal.smartcolumbusos.com/auth/auth0/callback\", \"https://andi.dev-smartos.com/auth/auth0/callback\", \"https://sharedata.dev.internal.smartcolumbusos.com/auth/auth0/callback\", \"https://sharedata.dev-smartos.com/auth/auth0/callback\"]",
+            "allowedLogoutUrls": "[\"https://127.0.0.1.nip.io:4443/auth/auth0\", \"https://andi.dev.internal.smartcolumbusos.com/auth/auth0\", \"https://andi.dev-smartos.com/auth/auth0\", \"https://sharedata.dev.internal.smartcolumbusos.com/auth/auth0\", \"https://sharedata.dev-smartos.com/auth/auth0\"]",
+            "allowedOrigins": "[\"https://127.0.0.1.nip.io:4443\", \"https://andi.dev.internal.smartcolumbusos.com\", \"https://andi.dev-smartos.com\", \"https://sharedata.dev.internal.smartcolumbusos.com\", \"https://sharedata.dev-smartos.com\"]",
+            "webOrigins": "[\"https://127.0.0.1.nip.io:4443\", \"https://andi.dev.internal.smartcolumbusos.com\", \"https://andi.dev-smartos.com\", \"https://sharedata.dev.internal.smartcolumbusos.com\", \"https://sharedata.dev-smartos.com\"]",
             "name": "ANDI",
             "type": "regular_web"
         }

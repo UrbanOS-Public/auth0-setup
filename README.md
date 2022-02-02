@@ -1,3 +1,5 @@
+Note: This repo includes configuration for the Hercules environment. Configuration for the legacy Smart Columbus environment can be found here: https://github.com/UrbanOS-Examples/auth0-setup
+
 # Auth0 Setup
 
 This project is a set of tools made for programmatically setting up Auth0 tenants for local, Development, Staging, and Production environments. This repo is set up to set up Auth0 for the SmartColumbusOS project. Once you follow the steps below, you can change the URLs, Client ID, and other configuration settings to suite your project and then run the script against your Auth0 tenants.

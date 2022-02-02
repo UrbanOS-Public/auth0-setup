@@ -145,6 +145,10 @@
     {
       "name": "Extended Access",
       "description": "Allow for extended access via refresh tokens"
+    },
+    {
+      "name": "Curator",
+      "description": "Dataset Curator"
     }
   ],
   "guardian": {
@@ -172,6 +176,19 @@
       "dependencies": [],
       "runtime": "node16",
       "secrets": []
+    },
+    {
+      "name": "add-user-roles",
+      "supported_triggers": [
+        {
+          "id": "post-login",
+          "version": "v2"
+        }
+      ],
+      "codePath": "./scripts/actionScripts/add-user-roles.js",
+      "dependencies": [],
+      "runtime": "node16",
+      "secrets": []
     }
   ],
   "postLoginFlow": [
@@ -181,6 +198,13 @@
         "value": "assign-api-key"
       },
       "display_name": "Assign API Key"
+    },
+    {
+      "ref": {
+        "type": "action_name",
+        "value": "add-user-roles"
+      },
+      "display_name": "Add User Roles"
     }
   ]
 }
