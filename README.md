@@ -1,3 +1,5 @@
+Note: This repo includes configuration for the Hercules environment. Configuration for the legacy Smart Columbus environment can be found here: https://github.com/UrbanOS-Examples/auth0-setup
+
 # Auth0 Setup
 
 This project is a set of tools made for programmatically setting up Auth0 tenants for local, Development, Staging, and Production environments. This repo is set up to set up Auth0 for the SmartColumbusOS project. Once you follow the steps below, you can change the URLs, Client ID, and other configuration settings to suite your project and then run the script against your Auth0 tenants.
@@ -32,6 +34,8 @@ Enter client secret for 'Auth0 Management' access: CLIENT_SECRET
 **Note:** In step 3 above, if all permissions were not selected, it may be necessary to go back and add additional permissions at a later date. If you start seeing messages that include `insufficient scope` returned by the API, you are likely missing necessary permissions. To do this: navigate to Applications -> APIs -> Auth0 Management API. On the Auth0 Management API menu, select "Machine to Machine Applications." Click the down arrow next to the "Auth0 Management list item and check the additional required permissions. 
 
 ### Manual Steps
+
+Ensure that, for new applications, under "Advanced Settings", the following Grant Types are selected: "Implicit", "Authorization Code", "Refresh Token", and "Client Credentials". (Client Credentials may not be selected by default.)
 
 For some pieces of configuration, Auth0 does not support API based updates.
 
