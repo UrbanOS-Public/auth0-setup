@@ -29,9 +29,19 @@ node auth0_setup.js config/dev.json
 Enter client secret for 'Auth0 Management' access: CLIENT_SECRET
 ```
 
-9. Repeat the above steps for each tenant you want for your environments.
+**Todo:** Find a way to include this in the auth0_setup.js:
 
-**Note:** In step 3 above, if all permissions were not selected, it may be necessary to go back and add additional permissions at a later date. If you start seeing messages that include `insufficient scope` returned by the API, you are likely missing necessary permissions. To do this: navigate to Applications -> APIs -> Auth0 Management API. On the Auth0 Management API menu, select "Machine to Machine Applications." Click the down arrow next to the "Auth0 Management list item and check the additional required permissions. 
+
+9. To ensure Andi has the proper permissions, visit the APIs section, Auth0
+Management API, "Machine to Machine Applications" section, and turn Andi to
+"Authorized".
+
+    - In the dialog that opens underneath, grant Andi the `read:roles`, `read:client_grants`, `read:users`, and `read:users_app_metadata` permissions. Be sure to press "update" to activate these changes.
+
+
+10. Repeat the above steps for each tenant you want for your environments.
+
+**Note:** In step 3 above, if all permissions were not selected, it may be necessary to go back and add additional permissions at a later date. If you start seeing messages that include `insufficient scope` returned by the API, you are likely missing necessary permissions. To do this: navigate to Applications -> APIs -> Auth0 Management API. On the Auth0 Management API menu, select "Machine to Machine Applications." Click the down arrow next to the "Auth0 Management list item and check the additional required permissions.
 
 ### Manual Steps
 
