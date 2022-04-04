@@ -78,3 +78,12 @@ This should pop open a model where you can scroll down to enter details for the 
   ![image](https://user-images.githubusercontent.com/31485710/83556900-b08dcf00-a4de-11ea-8ea9-28b2122f5e4c.png)
 
 Once you've completed these steps, within 5 minutes you should see logs flows to the CloudWatch log group in question.
+
+## Automatic Config Generation
+If you're using the latest version of the UrbanOS helm chart, the config will be generated for you and stored as a configmap. It can be retrieved with
+
+```shell
+kubectl get configmap auth0-config -o jsonpath='{.data.auth0\.config}' > auth0-config.json
+```
+
+This method requires that the `global.auth.auth0_management_client_id`, `global.ingress.dnsZone`, and `global.ingress.rootdnsZone` values be filled out.
