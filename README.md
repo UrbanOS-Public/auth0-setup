@@ -51,7 +51,7 @@ Management API, "Machine to Machine Applications" section, and turn Andi to
 
 ### Manual Steps
 
-Ensure that, for new applications, under "Advanced Settings", the following Grant Types are selected: "Implicit", "Authorization Code", "Refresh Token", and "Client Credentials". (Client Credentials may not be selected by default.)
+Ensure that, for new applications other than Andi and UrbanOs, under "Advanced Settings", the following Grant Types are selected: "Implicit", "Authorization Code", "Refresh Token", and "Client Credentials". (Client Credentials may not be selected by default.)
 
 For some pieces of configuration, Auth0 does not support API based updates.
 
