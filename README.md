@@ -18,7 +18,7 @@ Production.
 
 Before the tools in this repo can be used, you first need to set up the new tenants. There is not an API for creating new tenants. However, the following steps will set up a tenant in the simplest way possible allowing the tenant to be managed by these tools.
 
-1. Create tenant and pick a name - example `urbanos-dev` **IMPORTANT** THE TENANT NAME CANNOT BE CHANGED This is the subdomain used by auth0 for the endpoint. {tenantname}.auth0.com
+1. Create tenant and pick a name - example `urbanos-dev` **IMPORTANT** THE TENANT NAME CANNOT BE CHANGED This is the subdomain used by auth0 for the endpoint. {tenantname}.us.auth0.com
 2. Go to https://support.auth0.com/tenants/public and verify the correct environment is set (Development, Staging, Production) Auth0 defaults new tenants to be in the "Development" environment.
 3. Login to the new tenant. Go to the "Applications" section. Create a new "Machine to Machine" application and call it `Auth0 Management`. Select all permissions. This will be the auth0 "application"
 that the script in this repo uses to set up the rest of the tenant.
