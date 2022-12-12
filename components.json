@@ -91,7 +91,10 @@
               "read:roles",
               "read:client_grants",
               "read:users",
-              "read:users_app_metadata"
+              "read:users_app_metadata",
+              "update:users",
+              "create:role_members",
+              "delete:role_members"
           ]
       }
   ],

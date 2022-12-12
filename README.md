@@ -42,7 +42,7 @@ Enter client secret for 'Auth0 Management' access: CLIENT_SECRET
 Management API, "Machine to Machine Applications" section, and turn Andi to
 "Authorized".
 
-    - In the dialog that opens underneath, grant Andi the `read:roles`, `read:client_grants`, `read:users`, and `read:users_app_metadata` permissions. Be sure to press "update" to activate these changes.
+- In the dialog that opens underneath, grant Andi the `read:roles`, `read:client_grants`, `read:users`, `read:users_app_metadata`, `update:users`, `create:role_members`, and `delete:role_members` permissions. Be sure to press "update" to activate these changes.
 
 
 10. Repeat the above steps for each tenant you want for your environments.
