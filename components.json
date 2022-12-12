@@ -83,6 +83,18 @@
       "token_endpoint_auth_method": "none"
     }
   ],
+  "clientGrants": [
+      {
+          "name": "ANDI",
+          "audience": "https://<%= domain %>/api/v2/",
+          "scope": [
+              "read:roles",
+              "read:client_grants",
+              "read:users",
+              "read:users_app_metadata"
+          ]
+      }
+  ],
   "connections": [
     {
       "options": {
