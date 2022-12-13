@@ -81,6 +81,21 @@
       ].webOrigins %>,
       "custom_login_page_on": false,
       "token_endpoint_auth_method": "none"
+    },
+    {
+      "name": "<%= clients['Raptor'].name %>",
+      "app_type": "<%= clients['Raptor'].type %>",
+      "callbacks": <%= clients['Raptor'].callbacks %>,
+      "allowed_logout_urls": <%= clients['Raptor'].allowedLogoutUrls %>,
+      "logo_uri": "https://avatars.githubusercontent.com/u/50330003?s=200&v=4",
+      "allowed_origins": <%= clients['Raptor'].allowedOrigins %>,
+      "jwt_configuration": {
+        "alg": "RS256",
+        "lifetime_in_seconds": 36000
+      },
+      "web_origins": <%= clients['Raptor'].webOrigins %>,
+      "custom_login_page_on": false,
+      "token_endpoint_auth_method": "none"
     }
   ],
   "clientGrants": [
@@ -95,6 +110,16 @@
               "update:users",
               "create:role_members",
               "delete:role_members"
+          ]
+      },
+      {
+          "name": "Raptor",
+          "audience": "https://<%= domain %>/api/v2/",
+          "scope": [
+              "read:users",
+              "read:user_idp_tokens",
+              "update:users",
+              "update:users_app_metadata"
           ]
       }
   ],
