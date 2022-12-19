@@ -85,8 +85,6 @@
     {
       "name": "<%= clients['Raptor'].name %>",
       "app_type": "<%= clients['Raptor'].type %>",
-      "callbacks": <%= clients['Raptor'].callbacks %>,
-      "allowed_logout_urls": <%= clients['Raptor'].allowedLogoutUrls %>,
       "logo_uri": "https://avatars.githubusercontent.com/u/50330003?s=200&v=4",
       "allowed_origins": <%= clients['Raptor'].allowedOrigins %>,
       "jwt_configuration": {

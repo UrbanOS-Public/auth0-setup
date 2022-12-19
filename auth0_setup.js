@@ -90,6 +90,7 @@ async function main() {
 
   componentDefinitions.clientGrants.forEach((grant) => {
       grant.client_id = findMatchingClientId(grant.name, clients);
+      delete grant.name;
   });
 
   const grantParams = {
