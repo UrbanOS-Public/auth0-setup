@@ -164,19 +164,25 @@
       "enabled": true,
       "script": "function (user, context, callback) {\n  if (!user.email_verified) {\n    return callback(new UnauthorizedError('You must verify your email before you can save workspaces. Please check your email for the verification link.'));\n  } else {\n    return callback(null, user, context);\n }\n}",
       "name": "Require Email Validation",
-      "order": 1
+      "order": 2
     },
     {
       "enabled": true,
       "script": "function(user, context, callback){\n\tvar roles = (context.authorization || {}).roles || [];\n  var scope = ((context.request || {}).query || {}).scope || '';\n  \n  if (! scope.includes('offline_access')) return callback(null, user, context);\n  if (! roles.includes('Extended Access')) return callback(new UnauthorizedError('User is not authorized to request offline_access.'));\n  \n  return callback(null, user, context);\n}",
       "name": "Restrict Offline Access",
-      "order": 2
+      "order": 3
     },
     {
-      "enabled": true,
+      "enabled": false,
       "name": "Multifactor Authentication",
       "order": 4,
       "script": "function multifactorAuthentication(user, context, callback) {\n var roles = (context.authorization || {}).roles;\n\n if (roles.includes(\"Curator\")) {\n context.multifactor = {\n provider: 'any',\n allowRememberBrowser: true\n};\n}\n\n return callback(null, user, context);\n}"
+    },
+    {
+      "enabled": true,
+      "name": "Block Non-Curators from ANDI",
+      "order": 1,
+      "script": "function (user, context, callback) {\n\t const audience = '' || (context.request && context.request.query && context.request.query.audience) || (context.request && context.request.body && context.request.body.audience);\n\t const assignedRoles = (context.authorization || {}).roles;\n\n\t if (audience === \"andi\" & !assignedRoles.includes(\"Curator\")) {\n\t\t return callback(new UnauthorizedError('You must have the \"curator\" role to access Andi'));\n\t }\n\n\t return callback(null, user, context);\n}"
     }
   ],
   "roles": [
