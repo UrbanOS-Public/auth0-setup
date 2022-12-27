@@ -60,6 +60,7 @@ async function main() {
   const apiParams = {
     type: "API",
     idFieldName: "id",
+    fieldToMatchOn: "name",
     createFn: management.createResourceServer,
     updateFn: updateResourceServer,
   };
@@ -73,6 +74,7 @@ async function main() {
   const clientParams = {
     type: "Client",
     idFieldName: "client_id",
+    fieldToMatchOn: "name",
     createFn: management.createClient,
     updateFn: management.updateClient,
   };
@@ -83,6 +85,24 @@ async function main() {
     clientParams
   );
 
+  const oldGrants = await management.getClientGrants();
+  const clients = await management.getClients();
+
+  componentDefinitions.clientGrants.forEach((grant) => {
+      grant.client_id = findMatchingClientId(grant.name, clients);
+      delete grant.name;
+  });
+
+  const grantParams = {
+      type: "Client Grant",
+      idFieldName: "id",
+      fieldToMatchOn: "client_id",
+      createFn: management.createClientGrant,
+      updateFn: management.updateClientGrant
+  }
+
+  await updateComponents(oldGrants, componentDefinitions.clientGrants, grantParams);
+
   const oldConnections = await management.getConnections();
   const newConnections = await fillInConnectionConfigurations(
     componentDefinitions.connections,
@@ -91,6 +111,7 @@ async function main() {
   const connectionParams = {
     type: "Connection",
     idFieldName: "id",
+    fieldToMatchOn: "name",
     createFn: management.createConnection,
     updateFn: management.updateConnection,
   };
@@ -101,6 +122,7 @@ async function main() {
   const ruleParams = {
     type: "Rule",
     idFieldName: "id",
+    fieldToMatchOn: "name",
     createFn: management.createRule,
     updateFn: management.updateRule,
   };
@@ -111,6 +133,7 @@ async function main() {
   const roleParams = {
     type: "Role",
     idFieldName: "id",
+    fieldToMatchOn: "name",
     createFn: management.createRole,
     updateFn: management.updateRole,
   };
@@ -121,6 +144,7 @@ async function main() {
   const factorParams = {
     type: "Factor",
     idFieldName: "name",
+    fieldToMatchOn: "name",
     createFn: management.guardian.updateFactor,
     updateFn: management.guardian.updateFactor,
   };
@@ -135,6 +159,7 @@ async function main() {
   const actionParams = {
     type: "Action",
     idFieldName: "id",
+    fieldToMatchOn: "name",
   };
 
   await updateActions(
@@ -210,9 +235,9 @@ function updateResourceServer(params, resourceApi) {
 async function updateComponents(
   oldComponents,
   newComponents,
-  { type, idFieldName, createFn, updateFn }
+  { type, idFieldName, fieldToMatchOn, createFn, updateFn }
 ) {
-  const components = createListOfChanges(oldComponents, newComponents);
+  const components = createListOfChanges(oldComponents, newComponents, fieldToMatchOn);
   const componentUpdatePromises = components.map(
     async ({ newComponent, oldComponent }) => {
       if (newComponent && oldComponent) {
@@ -220,6 +245,8 @@ async function updateComponents(
         const name = newComponent.name;
         delete newComponent.name;
         delete newComponent.strategy;
+        delete newComponent.client_id;
+        delete newComponent.audience;
         await updateFn(params, newComponent);
         logMessage(`Success updating ${name} ${type}`);
       } else if (newComponent) {
@@ -235,8 +262,8 @@ async function updateComponents(
   return Promise.all(componentUpdatePromises);
 }
 
-async function updateActions(oldActions, newActions, { type, idFieldName }) {
-  const actions = createListOfChanges(oldActions, newActions);
+async function updateActions(oldActions, newActions, { type, idFieldName, fieldToMatchOn }) {
+  const actions = createListOfChanges(oldActions, newActions, fieldToMatchOn);
   const componentUpdatePromises = actions.map(
     async ({ newComponent, oldComponent }) => {
       if (newComponent && oldComponent) {
@@ -279,12 +306,12 @@ async function updateAction(oldAction, idFieldName, newAction, type) {
   logMessage(`Success updating ${name} ${type}`);
 }
 
-function createListOfChanges(oldComponents, newComponents) {
+function createListOfChanges(oldComponents, newComponents, matchingField) {
   const components = [];
 
   newComponents.forEach((newComponent) => {
     const oldComponent =
-      oldComponents.find((component) => component.name === newComponent.name) ||
+      oldComponents.find((component) => component[matchingField] === newComponent[matchingField]) ||
       null;
     components.push({
       newComponent: newComponent,
@@ -296,7 +323,7 @@ function createListOfChanges(oldComponents, newComponents) {
     const doesNotExist =
       components.find(
         ({ oldComponent }) =>
-          oldComponent !== null && component.name === oldComponent.name
+          oldComponent !== null && component[matchingField] === oldComponent[matchingField]
       ) === undefined;
     if (doesNotExist) {
       components.push({
@@ -313,6 +340,10 @@ function createIdParam(component, idFieldName) {
   const params = {};
   params[idFieldName] = component[idFieldName];
   return params;
+}
+
+function findMatchingClientId(name, clients) {
+    return clients.filter((client) => client.name === name)?.[0]?.client_id;
 }
 
 function userWantsToCreateConnection({ name }) {

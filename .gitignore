@@ -2,3 +2,4 @@ node_modules/
 js-beautify
 .DS_Store
 .idea/
+.fleet/settings.json
