@@ -160,26 +160,7 @@
       ]
     }
   ],
-  "rules": [
-    {
-      "enabled": false,
-      "name": "Multifactor Authentication",
-      "order": 4,
-      "script": "function multifactorAuthentication(user, context, callback) {\n var roles = (context.authorization || {}).roles;\n\n if (roles.includes(\"Curator\")) {\n context.multifactor = {\n provider: 'any',\n allowRememberBrowser: true\n};\n}\n\n return callback(null, user, context);\n}"
-    },
-    {
-      "enabled": true,
-      "script": "function(user, context, callback){\n\tvar roles = (context.authorization || {}).roles || [];\n  var scope = ((context.request || {}).query || {}).scope || '';\n  \n  if (! scope.includes('offline_access')) return callback(null, user, context);\n  if (! roles.includes('Extended Access')) return callback(new UnauthorizedError('User is not authorized to request offline_access.'));\n  \n  return callback(null, user, context);\n}",
-      "name": "Restrict Offline Access",
-      "order": 3
-    },
-    {
-      "enabled": true,
-      "script": "function (user, context, callback) {\n  if (!user.email_verified) {\n    return callback(new UnauthorizedError('You must verify your email before you can save workspaces. Please check your email for the verification link.'));\n  } else {\n    return callback(null, user, context);\n }\n}",
-      "name": "Require Email Validation",
-      "order": 2
-    }
-  ],
+  "rules": [],
   "roles": [
     {
       "name": "Extended Access",
