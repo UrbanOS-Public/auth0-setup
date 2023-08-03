@@ -160,32 +160,7 @@
       ]
     }
   ],
-  "rules": [
-    {
-      "enabled": false,
-      "name": "Multifactor Authentication",
-      "order": 4,
-      "script": "function multifactorAuthentication(user, context, callback) {\n var roles = (context.authorization || {}).roles;\n\n if (roles.includes(\"Curator\")) {\n context.multifactor = {\n provider: 'any',\n allowRememberBrowser: true\n};\n}\n\n return callback(null, user, context);\n}"
-    },
-    {
-      "enabled": true,
-      "script": "function(user, context, callback){\n\tvar roles = (context.authorization || {}).roles || [];\n  var scope = ((context.request || {}).query || {}).scope || '';\n  \n  if (! scope.includes('offline_access')) return callback(null, user, context);\n  if (! roles.includes('Extended Access')) return callback(new UnauthorizedError('User is not authorized to request offline_access.'));\n  \n  return callback(null, user, context);\n}",
-      "name": "Restrict Offline Access",
-      "order": 3
-    },
-    {
-      "enabled": true,
-      "script": "function (user, context, callback) {\n  if (!user.email_verified) {\n    return callback(new UnauthorizedError('You must verify your email before you can save workspaces. Please check your email for the verification link.'));\n  } else {\n    return callback(null, user, context);\n }\n}",
-      "name": "Require Email Validation",
-      "order": 2
-    },
-    {
-      "enabled": true,
-      "name": "Block Non-Curators from ANDI",
-      "order": 1,
-      "script": "function (user, context, callback) {\n\t const audience = '' || (context.request && context.request.query && context.request.query.audience) || (context.request && context.request.body && context.request.body.audience);\n\t const assignedRoles = (context.authorization || {}).roles;\n\n\t if (audience === \"andi\" & !assignedRoles.includes(\"Curator\")) {\n\t\t return callback(new UnauthorizedError('You must have the \"curator\" role to access Andi'));\n\t }\n\n\t return callback(null, user, context);\n}"
-    }
-  ],
+  "rules": [],
   "roles": [
     {
       "name": "Extended Access",
@@ -219,7 +194,7 @@
       ],
       "codePath": "./scripts/actionScripts/assign-api-key.js",
       "dependencies": [],
-      "runtime": "node16",
+      "runtime": "node18",
       "secrets": []
     },
     {
@@ -232,7 +207,59 @@
       ],
       "codePath": "./scripts/actionScripts/add-user-roles.js",
       "dependencies": [],
-      "runtime": "node16",
+      "runtime": "node18",
+      "secrets": []
+    },
+    {
+      "name": "block-non-curators",
+      "supported_triggers": [
+        {
+          "id": "post-login",
+          "version": "v2"
+        }
+      ],
+      "codePath": "./scripts/actionScripts/block-non-curators.js",
+      "dependencies": [],
+      "runtime": "node18",
+      "secrets": []
+    },
+    {
+      "name": "require-email-validation",
+      "supported_triggers": [
+        {
+          "id": "post-login",
+          "version": "v2"
+        }
+      ],
+      "codePath": "./scripts/actionScripts/require-email-validation.js",
+      "dependencies": [],
+      "runtime": "node18",
+      "secrets": []
+    },
+    {
+      "name": "restrict-offline-access",
+      "supported_triggers": [
+        {
+          "id": "post-login",
+          "version": "v2"
+        }
+      ],
+      "codePath": "./scripts/actionScripts/restrict-offline-access.js",
+      "dependencies": [],
+      "runtime": "node18",
+      "secrets": []
+    },
+    {
+      "name": "multi-factor-auth",
+      "supported_triggers": [
+        {
+          "id": "post-login",
+          "version": "v2"
+        }
+      ],
+      "codePath": "./scripts/actionScripts/multi-factor-auth.js",
+      "dependencies": [],
+      "runtime": "node18",
       "secrets": []
     }
   ],
@@ -250,6 +277,27 @@
         "value": "add-user-roles"
       },
       "display_name": "Add User Roles"
+    },
+    {
+      "ref": {
+        "type": "action_name",
+        "value": "require-email-validation"
+      },
+      "display_name": "Require Email Validation"
+    },
+    {
+      "ref": {
+        "type": "action_name",
+        "value": "restrict-offline-access"
+      },
+      "display_name": "Restrict Offline Access"
+    },
+    {
+      "ref": {
+        "type": "action_name",
+        "value": "block-non-curators"
+      },
+      "display_name": "Block Non Curators"
     }
   ]
 }
